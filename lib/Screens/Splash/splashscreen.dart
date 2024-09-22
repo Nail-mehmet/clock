@@ -1,7 +1,7 @@
 
 import 'dart:async';
 
-import 'package:clocker/Screens/Authentication/homepage.dart';
+import 'package:clocker/Screens/Authentication/auth_gate.dart';
 import 'package:clocker/Screens/OnBoarding/on_boarding_page.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         // Eğer onboarding tamamlanmışsa WelcomePage'e yönlendir
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => WelcomePage()),
+          MaterialPageRoute(builder: (context) => AuthGate()),
         );
       } else {
         // Onboarding tamamlanmamışsa OnboardingPage'e yönlendir

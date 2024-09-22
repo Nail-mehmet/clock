@@ -1,4 +1,4 @@
-import 'package:clocker/Screens/Authentication/homepage.dart';
+import 'package:clocker/Screens/Authentication/auth_gate.dart';
 import 'package:clocker/Screens/OnBoarding/components/onboarding_items.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -105,7 +105,7 @@ class _OnboardingViewState extends State<OnboardingView> {
             //After we press get started button this onboarding value become true
             // same key
             if(!mounted)return;
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>WelcomePage()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AuthGate()));
           },
           child: const Text("Get started",style: TextStyle(color: Colors.white),)),
     );

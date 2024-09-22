@@ -71,7 +71,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                   Image.asset(controller.items[index].image),
                   const SizedBox(height: 15),
                   Text(controller.items[index].title,
-                    style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                    style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: "Alegreya"),),
                   const SizedBox(height: 15),
                   Text(controller.items[index].descriptions,
                       style: const TextStyle(color: Colors.grey,fontSize: 17), textAlign: TextAlign.center),

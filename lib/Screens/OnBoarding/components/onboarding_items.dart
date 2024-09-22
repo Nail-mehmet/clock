@@ -3,23 +3,23 @@ import 'onboarding_info.dart';
 class OnboardingItems{
   List<OnboardingInfo> items = [
     OnboardingInfo(
-        title: "Laboratory",
-        descriptions: "A scientist in his laboratory is not a mere technician: he is also a child confronting natural phenomena that impress him as though they were fairy tales.",
+        title: "Kol Saatlerini Keşfet",
+        descriptions: "Yüzlerce eşsiz kol saati modeline göz atın. İhtiyacınıza ve tarzınıza en uygun saatleri kolayca bulun.",
         image: "assets/watch1.jpg"),
 
     OnboardingInfo(
-        title: "Diagnosis",
-        descriptions: "There is little you can do to stop a tornado, a hurricane, or a cancer diagnosis from changing your life in an instant.",
+        title: "Güvenli Alışveriş ve Ticaret",
+        descriptions: "Alıcı ve satıcılar arasında güvenli bir alışveriş deneyimi yaşayın. Güvenilir kullanıcılar ve güvenli ödeme yöntemleriyle içiniz rahat olsun.",
         image: "assets/onboarding2.gif"),
 
     OnboardingInfo(
-        title: "Chronic Diseases",
-        descriptions: "Cancer taught my family that my mom is much stronger than we ever thought.",
+        title: "Saatini Satmak Çok Kolay",
+        descriptions: "Kullanmadığınız kol saatlerini hızlıca listeleyin ve uygun fiyatlarla yeni sahipleriyle buluşturun.",
         image: "assets/onboarding3.gif"),
 
     OnboardingInfo(
-        title: "Heart Diseases",
-        descriptions: "A healthy heart is a key to happiness in life so put a stop to all of the problems related to your heart before it stops you.",
+        title: "Profilinizi Kişiselleştirin",
+        descriptions: "Kendinize özgü bir profil oluşturarak saat koleksiyonunuzu sergileyin. Beğendiğiniz ürünleri takip edin ve favorilerinizi kaydedin.",
         image: "assets/onboarding4.gif"),
 
   ];

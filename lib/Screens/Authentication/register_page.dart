@@ -11,6 +11,7 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final void Function()? onTap;
   RegisterPage({super.key, required this.onTap});
 
@@ -21,7 +22,8 @@ class RegisterPage extends StatelessWidget {
       try {
         _auth.signUpWithEmailPassword(
             _emailController.text,
-            _passwordController.text
+            _passwordController.text,
+            _userNameController.text
         );
       } catch (e) {
         showDialog(
@@ -121,6 +123,16 @@ class RegisterPage extends StatelessWidget {
                         SizedBox(height: 20,),
                         Container(
                           width: 360,
+                          child: MyTextField(
+                            hintText: "User Name",
+                            obscureText: false,
+                            controller: _userNameController,
+                            iconum: Icon(Icons.account_circle_outlined),
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        Container(
+                          width: 360,
                           child: PasswordField(
                             hintText: "Password",
                             controller: _passwordController,
@@ -158,7 +170,7 @@ class RegisterPage extends StatelessWidget {
                           text: "Register",
                           onTap: () => register(context),
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(height: 15,),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
@@ -180,13 +192,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 550.0, left: 150,right: 150),
-                child: Container(
-                  height: 120,
-                  child: Image.asset("assets/clock.png"),
-                ),
-              )
+
             ],
           ),
         ),

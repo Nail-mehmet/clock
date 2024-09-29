@@ -1,5 +1,6 @@
 
 
+import 'package:clocker/Components/color.dart';
 import 'package:clocker/Screens/Homepage/Home_page.dart';
 import 'package:clocker/Screens/Favorites/favorites.dart';
 import 'package:clocker/Screens/Messages/messages.dart';
@@ -21,7 +22,7 @@ class _NavBarState extends State<NavBar> {
     List<IconData> listOfIcons = [
       Icons.home_rounded,
       Icons.favorite_rounded,
-      Icons.settings_rounded,
+      Icons.message,
       Icons.person_rounded,
     ];
 
@@ -91,7 +92,7 @@ class _NavBarState extends State<NavBar> {
                         width: size.width * .128,
                         height: index == currentIndex ? size.width * .014 : 0,
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
+                          color: primaryColor,
                           borderRadius: BorderRadius.vertical(
                             bottom: Radius.circular(10),
                           ),
@@ -101,8 +102,8 @@ class _NavBarState extends State<NavBar> {
                         listOfIcons[index],
                         size: size.width * .076,
                         color: index == currentIndex
-                            ? Colors.blueAccent
-                            : Colors.black38,
+                            ? accent
+                            : primaryColor,
                       ),
                       SizedBox(height: size.width * .03),
                     ],

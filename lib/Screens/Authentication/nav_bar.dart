@@ -45,7 +45,7 @@ class _NavBarState extends State<NavBar> {
           ),
           Offstage(
             offstage: currentIndex != 3,
-            child: ProfileScreen(),
+            child: ProfilePage(),
           ),
           // Bottom Navigation Bar en üste yerleştiriliyor
           Positioned(

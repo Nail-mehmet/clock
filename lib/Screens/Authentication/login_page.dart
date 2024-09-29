@@ -5,8 +5,6 @@ import 'package:clocker/Components/my_textfield.dart';
 import 'package:clocker/Components/square_tile.dart';
 import 'package:clocker/Screens/Authentication/auth_service.dart';
 import 'package:clocker/Screens/Authentication/forgot_password.dart';
-import 'package:clocker/Screens/Authentication/politikalar%C4%B1m%C4%B1z_page.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {

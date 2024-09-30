@@ -1,4 +1,5 @@
 import 'package:clocker/Components/color.dart';
+import 'package:clocker/Screens/Profile/sell_watch_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
                       onPressed: () {
                         // Butona tıklanınca yapılacak işlem
-                        print('Saatini Sat Butonuna Tıklandı');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SellWatchPage()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 80),

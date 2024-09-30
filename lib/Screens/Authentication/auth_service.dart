@@ -12,6 +12,20 @@ class AuthService {
   User? getCurrentUser () {
     return _auth.currentUser;
   }
+  Future<String?> getUserName() async {
+    User? currentUser = getCurrentUser(); // Mevcut kullanıcıyı al
+    if (currentUser != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(currentUser.uid)
+          .get();
+
+      // Kullanıcının adını 'name' alanından alıyoruz
+      return userDoc['name'] ?? 'No name available';
+    }
+    return null; // Kullanıcı oturumu yoksa
+  }
+
 
   // Kullanıcının satıcı olup olmadığını kontrol eden fonksiyon
   Future<bool> isSeller() async {

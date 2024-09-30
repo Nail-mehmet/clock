@@ -3,7 +3,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? getCurrentUser () {
+    return _auth.currentUser;
+  }
+  Future<String?> getUserName() async {
+    User? currentUser = getCurrentUser(); // Mevcut kullanıcıyı al
+    if (currentUser != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(currentUser.uid)
+          .get();
+
+      // Kullanıcının adını 'name' alanından alıyoruz
+      return userDoc['username'] ?? 'No name available';
+    }
+    return null; // Kullanıcı oturumu yoksa
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +42,29 @@ class ProfilePage extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
+
                     CircleAvatar(
                       radius: 50, // Profil fotoğrafının büyüklüğü
                       backgroundImage: AssetImage('assets/Walter.jpg'), // Profil resmi
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'Kullanıcı Adı',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    FutureBuilder<String?>(
+                      future: getUserName(), // Kullanıcı adını çeken fonksiyon
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator(); // Yükleniyor göstergesi
+                        }
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}'); // Hata mesajı
+                        }
+                        if (snapshot.hasData) {
+                          return Text('${snapshot.data}'); // Adı ekrana yazdırma
+                        }
+                        return Text('No user data available'); // Veriler boşsa
+                      },
                     ),
                     Text(
-                      'email@example.com',
+                      _auth.currentUser!.email!,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[600],

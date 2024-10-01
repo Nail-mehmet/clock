@@ -9,11 +9,34 @@ class SellWatchPage extends StatefulWidget {
 
 class _SellWatchPageState extends State<SellWatchPage> {
   final _formKey = GlobalKey<FormState>();
-  final _brandController = TextEditingController();
   final _mechanismTypeController = TextEditingController();
   final _yearController = TextEditingController();
   final _conditionController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  String? _selectedBrand;
+  List<String> watchBrands = [
+    'Rolex',
+    'Patek Philippe',
+    'Audemars Piguet',
+    'Richard Mille',
+    'Tissot',
+    'Seiko',
+    'Casio',
+    'Citizen',
+    'Orient',
+    'Longines',
+    'Tag Heuer',
+    'Breitling',
+    'Panerai',
+    'Hublot',
+    'IWC Schaffhausen',
+    'Bell & Ross',
+    'Movado',
+    'Fossil',
+    'Chopard',
+    'Vacheron Constantin',
+  ];
 
   void _submit() async {
     if (_formKey.currentState!.validate()) {
@@ -22,7 +45,7 @@ class _SellWatchPageState extends State<SellWatchPage> {
       // Firestore'a kaydet
       await FirebaseFirestore.instance.collection('listings').add({
         'userId': currentUser!.uid,
-        'brand': _brandController.text,
+        'brand': _selectedBrand,
         'mechanismType': _mechanismTypeController.text,
         'year': _yearController.text,
         'condition': _conditionController.text,
@@ -35,7 +58,9 @@ class _SellWatchPageState extends State<SellWatchPage> {
       );
 
       // Formu temizle
-      _brandController.clear();
+      setState(() {
+        _selectedBrand = null;
+      });
       _mechanismTypeController.clear();
       _yearController.clear();
       _conditionController.clear();
@@ -55,91 +80,158 @@ class _SellWatchPageState extends State<SellWatchPage> {
           key: _formKey,
           child: ListView(
             children: [
-              // Marka
-              TextFormField(
-                controller: _brandController,
-                decoration: InputDecoration(labelText: 'Marka'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Lütfen marka girin';
-                  }
-                  return null;
-                },
+              // Saat Markası
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Saat Markası',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: _selectedBrand,
+                          isExpanded: true,
+                          hint: Text('Seçin'),
+                          items: watchBrands.map((String brand) {
+                            return DropdownMenuItem<String>(
+                              value: brand,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(brand),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedBrand = newValue;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
+
               // Mekanizma Tipi
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Mekanizma Tipi'),
-                items: [
-                  'Otomatik',
-                  'Pilli',
-                  'Kurmalı',
-                ].map((String type) {
-                  return DropdownMenuItem<String>(
-                    value: type,
-                    child: Text(type),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  _mechanismTypeController.text = value ?? '';
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Lütfen mekanizma tipini seçin';
-                  }
-                  return null;
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'Mekanizma Tipi',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                  ),
+                  items: ['Otomatik', 'Pilli', 'Kurmalı'].map((String type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0), // Padding eklendi
+                        child: Text(type),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    _mechanismTypeController.text = value ?? '';
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Lütfen mekanizma tipini seçin';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              SizedBox(height: 20),
+
               // Çıkış Yılı
-              TextFormField(
-                controller: _yearController,
-                decoration: InputDecoration(labelText: 'Çıkış Yılı'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Lütfen çıkış yılını girin';
-                  }
-                  return null;
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextFormField(
+                  controller: _yearController,
+                  decoration: InputDecoration(
+                    labelText: 'Çıkış Yılı',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Lütfen çıkış yılını girin';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              SizedBox(height: 20),
+
               // Kondisyon
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Kondisyon'),
-                items: [
-                  'Yeni',
-                  'İkinci El',
-                  'Kullanılmış',
-                ].map((String condition) {
-                  return DropdownMenuItem<String>(
-                    value: condition,
-                    child: Text(condition),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  _conditionController.text = value ?? '';
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Lütfen kondisyona göre bir seçim yapın';
-                  }
-                  return null;
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    labelText: 'Kondisyon',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                  ),
+                  items: ['Yeni', 'İkinci El', 'Kullanılmış'].map((String condition) {
+                    return DropdownMenuItem<String>(
+                      value: condition,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(condition),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    _conditionController.text = value ?? '';
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Lütfen kondisyona göre bir seçim yapın';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              SizedBox(height: 20),
-              // Açıklama
-              TextFormField(
-                controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Açıklama'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Lütfen açıklama girin';
-                  }
-                  return null;
-                },
+
+              // Açıklama (Çok satırlı)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextFormField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                    labelText: 'Açıklama',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                  ),
+                  maxLines: 3, // Açıklama alanı için 3 satır
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Lütfen açıklama girin';
+                    }
+                    return null;
+                  },
+                ),
               ),
+
               SizedBox(height: 20),
+
               ElevatedButton(
                 onPressed: _submit,
                 child: Text('Kaydet'),

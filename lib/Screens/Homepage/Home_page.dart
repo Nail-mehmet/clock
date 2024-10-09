@@ -1,3 +1,4 @@
+import 'package:clocker/Components/color.dart';
 import 'package:clocker/Screens/Homepage/promotion_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,21 @@ class _HomePageState extends State<HomePage> {
     "Patek",
     "Seiko",
   ];
+  Future<String> _getUsername(String userId) async {
+    DocumentSnapshot userDoc =
+    await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+
+    if (userDoc.exists) {
+      return userDoc['username']; // Kullanıcı adı için doğru alan
+    } else {
+      return "Bilinmeyen kullanıcı"; // Kullanıcı bulunamazsa
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: background,
       body: SingleChildScrollView(
         padding: MediaQuery.of(context).padding,
         child: Column(
@@ -38,13 +50,14 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
+                          color: primaryColor
                         ),
                       ),
                       TextButton(
                         onPressed: () {},
                         child: Text(
                           "see all",
-                          style: TextStyle(fontSize: 15, color: Colors.blue),
+                          style: TextStyle(fontSize: 15, color: primaryColor),
                         ),
                       )
                     ],
@@ -61,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                         margin: EdgeInsets.only(right: 24),
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         decoration: BoxDecoration(
-                          color: index == 0 ? Colors.black : Colors.white,
+                          color: index == 0 ? primaryColor : Colors.white,
                           border: Border.all(),
                           borderRadius: BorderRadius.circular(24),
                         ),
@@ -102,71 +115,107 @@ class _HomePageState extends State<HomePage> {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         var data = snapshot.data!.docs[index];
+                        String userId = data["userId"];
                         String title = data['description'];
-                        String price = data['year'].toString();
+                        String price = data['price'].toString();
                         List<dynamic> images = data["images"];
                         String imageUrl = images.isNotEmpty
                             ? images[0]
                             : 'https://via.placeholder.com/150';
 
-                        return InkWell(
-                          onTap: () {},
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            elevation: 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Görsel gösterimi
-                                Container(
-                                  height: 150, // Görsel yüksekliği
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16),
-                                    ),
-                                    image: DecorationImage(
-                                      image: NetworkImage(imageUrl),
-                                      fit: BoxFit.cover, // Görselin kutuya sığdırılması
-                                    ),
+                        return FutureBuilder(
+                            future: _getUsername(userId),
+                            builder: (context, userSnapshot) {
+                              if(userSnapshot.connectionState == ConnectionState.waiting){
+                                return CircularProgressIndicator();
+                              }
+                              if(!userSnapshot.hasData) {
+                                return Text("Kullanıcı adı yüklenemedi");
+                              }
+                              return InkWell(
+                                onTap: () {},
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  color: Colors.white,
+                                  elevation: 5,
                                   child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        title,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                                      // Görsel gösterimi
+                                      Container(
+                                        height: 150, // Görsel yüksekliği
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(16),
+                                            topRight: Radius.circular(16),
+                                          ),
+                                          image: DecorationImage(
+                                            image: NetworkImage(imageUrl),
+                                            fit: BoxFit.cover, // Görselin kutuya sığdırılması
+                                          ),
                                         ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        "$price TL",
-                                        style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 14,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              title,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: primaryColor
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            SizedBox(height: 4),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  price,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 4,),
+                                                Container(
+                                                  width: 1,
+                                                  height: 10,
+                                                  margin: EdgeInsets.symmetric(horizontal: 8),
+                                                  color: Colors.grey,
+                                                ),
+                                                Icon(
+                                                  Icons.favorite,
+                                                  color: Colors.redAccent,
+                                                  size: 20,
+                                                ),
+                                                SizedBox(width: 4,),
+                                                Text("8500")
+                                              ],
+                                            ),
+                                            Text(
+                                                userSnapshot.data!
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
+                              );
+                            }
                         );
                       },
                     );
                   },
                 ),
+                SizedBox(height: 60,)
               ],
             ),
           ],

@@ -102,8 +102,8 @@ class _NavBarState extends State<NavBar> {
                         listOfIcons[index],
                         size: size.width * .076,
                         color: index == currentIndex
-                            ? accent
-                            : primaryColor,
+                            ? primaryColor
+                            : secondaryColor,
                       ),
                       SizedBox(height: size.width * .03),
                     ],

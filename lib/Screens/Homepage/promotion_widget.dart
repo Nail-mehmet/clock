@@ -1,5 +1,6 @@
 
 
+import 'package:clocker/Components/color.dart';
 import 'package:flutter/material.dart';
 
 class PromotionWidget extends StatelessWidget {
@@ -11,7 +12,7 @@ class PromotionWidget extends StatelessWidget {
       height: 180,
       margin: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: primaryColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -23,9 +24,9 @@ class PromotionWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text("35%",style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold),),
-                  Text("Todays Special",style: TextStyle(fontSize: 20,),),
-                  Text("get discount for every order",style: TextStyle(fontSize: 15,),),
+                  Text("35%",style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: secondaryColor),),
+                  Text("Todays Special",style: TextStyle(fontSize: 20,color: secondaryColor)),
+                  Text("get discount for every order",style: TextStyle(fontSize: 15,color: secondaryColor)),
                 ],
               ),
             ),

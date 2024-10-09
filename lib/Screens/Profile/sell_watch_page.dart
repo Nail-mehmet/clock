@@ -21,6 +21,7 @@ class _SellWatchPageState extends State<SellWatchPage> {
   final _formKey = GlobalKey<FormState>();
   final _mechanismTypeController = TextEditingController();
   final _yearController = TextEditingController();
+  final _priceController = TextEditingController();
   final _conditionController = TextEditingController();
   final _descriptionController = TextEditingController();
   String? _selectedBrand;
@@ -100,7 +101,8 @@ class _SellWatchPageState extends State<SellWatchPage> {
         'condition': _condition,
         'description': _descriptionController.text,
         'timestamp': FieldValue.serverTimestamp(),
-        "images": _uploadedFileURLs
+        "images": _uploadedFileURLs,
+        "price": _priceController.text,
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -114,6 +116,7 @@ class _SellWatchPageState extends State<SellWatchPage> {
       });
       //_mechanismTypeController.clear();
       _yearController.clear();
+      _priceController.clear();
       //_conditionController.clear();
       _descriptionController.clear();
     }
@@ -259,28 +262,8 @@ class _SellWatchPageState extends State<SellWatchPage> {
                   ),
                 ),
               ),
-              // Çıkış Yılı
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  controller: _yearController,
-                  decoration: InputDecoration(
-                    labelText: 'Çıkış Yılı',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.grey, width: 1),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Lütfen çıkış yılını girin';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-
+              SizedBox(height: 5,),
+              // Çıkış Yıl
               // Kondisyon
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -310,6 +293,47 @@ class _SellWatchPageState extends State<SellWatchPage> {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: TextFormField(
+                  controller: _yearController,
+                  decoration: InputDecoration(
+                    labelText: 'Çıkış Yılı',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Lütfen çıkış yılını girin';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: TextFormField(
+                  controller: _priceController,
+                  decoration: InputDecoration(
+                    labelText: 'Satış Fiyatı',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.grey, width: 1),
+                    ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Lütfen çıkış yılını girin';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+
 
               // Açıklama
               Padding(

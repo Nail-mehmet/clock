@@ -26,7 +26,7 @@ class PromotionWidget extends StatelessWidget {
                 children: [
                   Text("35%",style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: secondaryColor),),
                   Text("Todays Special",style: TextStyle(fontSize: 20,color: secondaryColor)),
-                  Text("get discount for every order",style: TextStyle(fontSize: 15,color: secondaryColor)),
+                  Text("Saat al, sat, takas et",style: TextStyle(fontSize: 15,color: secondaryColor)),
                 ],
               ),
             ),

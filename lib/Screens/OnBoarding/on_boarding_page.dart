@@ -22,8 +22,9 @@ class _OnboardingViewState extends State<OnboardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       bottomSheet: Container(
-        color: background,
+        color: primaryColor,
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
         child: isLastPage? getStarted() : Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +33,7 @@ class _OnboardingViewState extends State<OnboardingView> {
             //Skip Button
             TextButton(
                 onPressed: ()=>pageController.jumpToPage(controller.items.length-1),
-                child: const Text("Skip")),
+                child: const Text("Skip",style: TextStyle(color: secondaryColor),)),
 
             //Indicator
             SmoothPageIndicator(
@@ -43,7 +44,8 @@ class _OnboardingViewState extends State<OnboardingView> {
               effect: const WormEffect(
                 dotHeight: 12,
                 dotWidth: 12,
-                activeDotColor: primaryColor,
+                activeDotColor: secondaryColor,
+                dotColor: accent
               ),
             ),
 
@@ -51,14 +53,14 @@ class _OnboardingViewState extends State<OnboardingView> {
             TextButton(
                 onPressed: ()=>pageController.nextPage(
                     duration: const Duration(milliseconds: 600), curve: Curves.easeIn),
-                child: const Text("Next")),
+                child: const Text("Next",style: TextStyle(color: secondaryColor),)),
 
 
           ],
         ),
       ),
       body: Container(
-        color: background,
+        color: primaryColor,
        // margin: const EdgeInsets.symmetric(horizontal: 15),
         child: PageView.builder(
             onPageChanged: (index)=> setState(()=> isLastPage = controller.items.length-1 == index),
@@ -68,13 +70,18 @@ class _OnboardingViewState extends State<OnboardingView> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(controller.items[index].image),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                        child: Image.asset(controller.items[index].image)),
+                  ),
                   const SizedBox(height: 15),
                   Text(controller.items[index].title,
-                    style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: "Alegreya"),),
+                    style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold,fontFamily: "Alegreya",color: secondaryColor),),
                   const SizedBox(height: 15),
                   Text(controller.items[index].descriptions,
-                      style: const TextStyle(color: Colors.grey,fontSize: 17), textAlign: TextAlign.center),
+                      style: const TextStyle(color: accent,fontSize: 17), textAlign: TextAlign.center),
                 ],
               );
 
@@ -93,7 +100,7 @@ class _OnboardingViewState extends State<OnboardingView> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: primaryColor
+          color: secondaryColor
       ),
       width: MediaQuery.of(context).size.width * .9,
       height: 55,

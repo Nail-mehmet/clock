@@ -339,6 +339,7 @@ class _SellWatchPageState extends State<SellWatchPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: TextFormField(
+                  autocorrect: false,
                   controller: _descriptionController,
                   decoration: InputDecoration(
                     labelText: 'Açıklama',

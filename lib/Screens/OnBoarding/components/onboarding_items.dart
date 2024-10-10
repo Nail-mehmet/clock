@@ -10,17 +10,17 @@ class OnboardingItems{
     OnboardingInfo(
         title: "Güvenli Alışveriş ve Ticaret",
         descriptions: "Alıcı ve satıcılar arasında güvenli bir alışveriş deneyimi yaşayın. Güvenilir kullanıcılar ve güvenli ödeme yöntemleriyle içiniz rahat olsun.",
-        image: "assets/onboarding2.gif"),
+        image: "assets/watch2.jpg"),
 
     OnboardingInfo(
         title: "Saatini Satmak Çok Kolay",
         descriptions: "Kullanmadığınız kol saatlerini hızlıca listeleyin ve uygun fiyatlarla yeni sahipleriyle buluşturun.",
-        image: "assets/onboarding3.gif"),
+        image: "assets/watch3.jpg"),
 
     OnboardingInfo(
         title: "Profilinizi Kişiselleştirin",
         descriptions: "Kendinize özgü bir profil oluşturarak saat koleksiyonunuzu sergileyin. Beğendiğiniz ürünleri takip edin ve favorilerinizi kaydedin.",
-        image: "assets/onboarding4.gif"),
+        image: "assets/watch4.jpg"),
 
   ];
 }

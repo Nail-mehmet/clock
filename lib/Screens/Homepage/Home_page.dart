@@ -1,6 +1,8 @@
 import 'package:clocker/Components/color.dart';
 import 'package:clocker/Screens/Homepage/promotion_widget.dart';
+import 'package:clocker/Screens/Homepage/watch_detail_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -116,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         var data = snapshot.data!.docs[index];
                         String userId = data["userId"];
+                        String brand = data["brand"];
                         String title = data['description'];
                         String price = data['price'].toString();
                         List<dynamic> images = data["images"];
@@ -133,12 +136,24 @@ class _HomePageState extends State<HomePage> {
                                 return Text("Kullanıcı adı yüklenemedi");
                               }
                               return InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailPage(
+                                       title: brand,
+                                       price: price,
+                                       images: List<String>.from(images),
+                                        sellerUsername: userSnapshot.data!,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Card(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),
-                                  color: Colors.white,
+                                  color: CupertinoColors.white,
                                   elevation: 5,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
